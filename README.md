@@ -25,7 +25,7 @@ No backend, no network requests: your data never leaves your browser.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/overview-dark.png" />
-  <img src="docs/img/overview-light.png" alt="PenFlow overview of a loaded scan: live hosts, open ports, findings by severity, review progress and scan coverage" width="100%" />
+  <img src="docs/img/overview-light.png" alt="PenFlow overview of an engagement: its summary, what is pending before delivery and recent activity, above the figures of the loaded scan" width="100%" />
 </picture>
 
 </div>
@@ -97,6 +97,9 @@ No backend, no network requests: your data never leaves your browser.
   </tr>
 </table>
 
+- **Engagement summary** on Overview: client, status, dates and days to delivery, assets in and out
+  of scope, candidates to triage, a list of what is pending before delivery with a link to each
+  place, and the recent activity.
 - **Organised by engagement.** The sidebar follows the work: Overview, then Execute (Import,
   Assets, Findings, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
   encryption state are always visible in the header.
@@ -105,6 +108,8 @@ No backend, no network requests: your data never leaves your browser.
 - **Asset inventory**: every host, domain, URL, application, API or cloud resource once, added by
   hand or by an import, with its scope status, services, pending detections, review and the tools
   that saw it. Merge assets that are the same and separate them again without losing anything.
+  Each asset has a card with its services, candidates and the history of every import, and every
+  observed value tells which import it comes from.
 - **Explainable risk and priority** per host, coverage, anomalies, correlations and an inventory of
   products and versions (the Software tab).
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
@@ -116,11 +121,16 @@ No backend, no network requests: your data never leaves your browser.
   date. Each new engagement asks you to confirm you are authorised to test it.
 - **Structured scope** with inclusions and exclusions (an exclusion always wins), revisions you can
   compare, restrictions and time windows, and target lists for nmap `-iL` and `--excludefile`.
-  Scope checks never resolve names.
+  Scope checks never resolve names. Hosts and services outside it are marked in every view and in
+  reports, and the command builder always leaves the exclusions out.
 - **Activity** of each engagement: what changed, who and when, filterable and linked to where it
   happened. It never keeps the scope, notes or imported content.
 - **Clients**, with sector, notes and contacts: search them, archive them and see each client's
-  engagements on its sheet. They are kept unencrypted in this browser, and the view says so.
+  engagements on its sheet. They are kept unencrypted in this browser, and the view says so; the
+  client of an encrypted engagement is kept inside it.
+- **Encryption per engagement** with a passphrase (AES-256-GCM, PBKDF2-SHA-256 with 600 000
+  iterations), from its settings or when it is created. Only the alias you choose is shown while
+  it is locked, and there is no recovery if the passphrase is forgotten.
 - **Your profile and preferences**, kept in this browser: display name, interface and report
   language, theme and evidence size limit, in **Settings**.
 - **Five languages** (English, Español, Deutsch, Français, Русский), light, dark and high contrast
@@ -130,14 +140,14 @@ No backend, no network requests: your data never leaves your browser.
 
 Planned for the next releases, all in the browser and without network:
 
-- Services checked against the scope, with out-of-scope warnings on import.
+- Out-of-scope warnings in the import preview.
 - Findings with CVSS 3.1/4.0, a bundled CWE catalogue and finding templates.
 - Evidence (screenshots and files) with hashes, safe preview and redaction.
 - Methodologies and checklists.
 - Importers for Nuclei, Burp Suite, OWASP ZAP, Nessus, OpenVAS and generic CSV, with preview and
   triage of candidates.
-- Executive and technical reports, optional encryption per engagement, and engagement packages to
-  merge work between auditors.
+- Executive and technical reports, an automatic lock after inactivity, and engagement packages
+  (optionally encrypted) to merge work between auditors.
 
 ## Three ways to use it
 
