@@ -34,8 +34,9 @@ No backend, no network requests: your data never leaves your browser.
 
 > [!NOTE]
 > **Early stage.** PenFlow starts from [vnmap](https://github.com/apiraces-hiberuscom/vnmap), by
-> the same author. The current release is its network analysis under the new name; engagement
-> management is being built on top of it, release by release (see [Roadmap](#roadmap)).
+> the same author. Today it covers vnmap's network analysis, organised around the engagement;
+> the rest of engagement management is being built on top of it, release by release (see
+> [Roadmap](#roadmap)).
 
 ## Why PenFlow
 
@@ -96,13 +97,19 @@ No backend, no network requests: your data never leaves your browser.
   </tr>
 </table>
 
+- **Organised by engagement.** The sidebar follows the work: Overview, then Execute (Import,
+  Assets, Findings, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
+  encryption state are always visible in the header.
 - **Imports** nmap (XML, grepable and normal) and masscan (XML, list and JSON) results, merged by
   IP address.
 - **Explainable risk and priority** per host, coverage, anomalies, correlations and an inventory of
   products and versions.
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
   Nothing is looked up online.
-- **Reports** in HTML (print-ready, with your cover and logo), Markdown, CSV and JSON.
+- **Reports** in HTML (print-ready, with your cover and logo), Markdown, CSV and JSON. The scope
+  note accepts Markdown, with a preview; whatever you write is always shown as text, never as HTML.
+- **Your profile and preferences**, kept in this browser: display name, interface and report
+  language, theme and evidence size limit, in **Settings**.
 - **Five languages** (English, Español, Deutsch, Français, Русский), light, dark and high contrast
   themes, and keyboard and screen reader support.
 
@@ -221,7 +228,7 @@ shasum -a 256 -c SHA256SUMS     # macOS
 
 Data is saved in the browser, and browsers keep it separately for each address. The demo and the
 portable copy (and the portable copy on another port) do not see each other's data. To move a
-project, open **Project management › Portability** and use **Export project** in one copy and
+project, open **Engagement settings › Portability** and use **Export project** in one copy and
 **Import project** in the other. Project files exported from vnmap can be imported too.
 
 ## Privacy
