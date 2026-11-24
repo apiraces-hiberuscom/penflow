@@ -102,12 +102,25 @@ No backend, no network requests: your data never leaves your browser.
   encryption state are always visible in the header.
 - **Imports** nmap (XML, grepable and normal) and masscan (XML, list and JSON) results, merged by
   IP address.
+- **Asset inventory**: every host, domain, URL, application, API or cloud resource once, added by
+  hand or by an import, with its scope status, services, pending detections, review and the tools
+  that saw it. Merge assets that are the same and separate them again without losing anything.
 - **Explainable risk and priority** per host, coverage, anomalies, correlations and an inventory of
-  products and versions.
+  products and versions (the Software tab).
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
   Nothing is looked up online.
 - **Reports** in HTML (print-ready, with your cover and logo), Markdown, CSV and JSON. The scope
   note accepts Markdown, with a preview; whatever you write is always shown as text, never as HTML.
+- **Engagements with their details**: client, type, status, dates, reference and team. Find them
+  by name, reference or client, filter by status, type or client, and sort by activity, name or due
+  date. Each new engagement asks you to confirm you are authorised to test it.
+- **Structured scope** with inclusions and exclusions (an exclusion always wins), revisions you can
+  compare, restrictions and time windows, and target lists for nmap `-iL` and `--excludefile`.
+  Scope checks never resolve names.
+- **Activity** of each engagement: what changed, who and when, filterable and linked to where it
+  happened. It never keeps the scope, notes or imported content.
+- **Clients**, with sector, notes and contacts: search them, archive them and see each client's
+  engagements on its sheet. They are kept unencrypted in this browser, and the view says so.
 - **Your profile and preferences**, kept in this browser: display name, interface and report
   language, theme and evidence size limit, in **Settings**.
 - **Five languages** (English, Español, Deutsch, Français, Русский), light, dark and high contrast
@@ -117,8 +130,7 @@ No backend, no network requests: your data never leaves your browser.
 
 Planned for the next releases, all in the browser and without network:
 
-- Clients and engagements, with structured and versioned scope.
-- Assets and services, checked against the scope.
+- Services checked against the scope, with out-of-scope warnings on import.
 - Findings with CVSS 3.1/4.0, a bundled CWE catalogue and finding templates.
 - Evidence (screenshots and files) with hashes, safe preview and redaction.
 - Methodologies and checklists.
