@@ -25,7 +25,7 @@ No backend, no network requests: your data never leaves your browser.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/overview-dark.png" />
-  <img src="docs/img/overview-light.png" alt="PenFlow overview of an engagement: its summary, what is pending before delivery and recent activity, above the figures of the loaded scan" width="100%" />
+  <img src="docs/img/overview-light.png" alt="PenFlow overview of an engagement: its summary, what is pending before delivery and recent activity" width="100%" />
 </picture>
 
 </div>
@@ -76,7 +76,7 @@ No backend, no network requests: your data never leaves your browser.
         <source media="(prefers-color-scheme: dark)" srcset="docs/img/findings-dark.png" />
         <img src="docs/img/findings-light.png" alt="Findings sorted by severity, each with its next command" />
       </picture>
-      <p align="center"><b>Findings</b><br /><sub>Built-in rules, each with why it matters, a review status and the next command.</sub></p>
+      <p align="center"><b>Findings</b><br /><sub>Built-in rules, each with why it matters, a triage status and the next command.</sub></p>
     </td>
   </tr>
   <tr>
@@ -99,16 +99,22 @@ No backend, no network requests: your data never leaves your browser.
 
 - **Engagement summary** on Overview: client, status, dates and days to delivery, assets in and out
   of scope, findings and candidates to triage, methodology progress, a list of what is pending
-  before delivery (checklist items still open among them) with a link to each place, and the
-  recent activity.
+  before delivery (checklist items still open among them) with a link to each place, the
+  recent activity and a way to the network analysis.
 - **Findings you document**, apart from what tools detect: a card in sections (affected assets,
   services and locations, description, impact, reproduction and remediation in safe Markdown),
   stable references such as `PF-001`, a CVSS 3.1 and 4.0 calculator whose score sets the
   severity, the CWE catalogue of MITRE bundled for offline search, a library of finding
   templates (97 built in, in English, plus your own), statuses from draft to confirmed, search, filters and bulk
   actions, and warnings before delivery (no evidence, no remediation, out of scope, possible
-  duplicate). Document a group of candidates as one draft, and create a retest that carries the
-  confirmed findings to a new engagement.
+  duplicate). Create a retest that carries the confirmed findings to a new engagement.
+- **Triage of candidates**: what the rules detect waits in Findings › Triage, grouped by rule or by
+  asset. Tick groups or single candidates and, all at once, promote them to one new finding, add
+  them to a finding you already have, dismiss them with a reason (false positive, duplicate, out of
+  scope, not relevant) or put them back to new; the last change can be undone. A candidate keeps
+  its decision when the scan is loaded again, says when the last scan of that place no longer
+  reports it and in how many scans it was seen, and nothing is ever confirmed on its own. False
+  positives and duplicates leave the risk score of their host.
 - **Evidence** with its SHA-256: drop, choose or paste screenshots, logs, HTTP exchanges and files,
   link them to findings and assets, mark the relevant lines of a text, and check their integrity.
   The type is told by the content; only checked images are shown, and SVG, HTML and PDF never
@@ -122,16 +128,43 @@ No backend, no network requests: your data never leaves your browser.
 - **Organised by engagement.** The sidebar follows the work: Overview, then Prepare (Scope,
   Methodology), Execute (Import, Assets, Findings, Evidence, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
   encryption state are always visible in the header.
-- **Imports** nmap (XML, grepable and normal) and masscan (XML, list and JSON) results, merged by
-  IP address.
+- **Import centre** for nmap (XML, grepable and normal), masscan (XML, list and JSON), Nuclei
+  (JSON lines, `-jsonl`), Burp Suite (issues XML), OWASP ZAP (traditional XML or JSON) and Nessus
+  (`.nessus` v2) results:
+  drop the files, choose them or paste the output and see what was understood before anything is
+  added. It counts the new and existing assets, services and hosts outside the scope, warns about a
+  file already imported, and keeps the history of each import, with its hash and original copy,
+  which you can undo. Results are merged by IP address; each host keeps its names, operating
+  system, MAC address and network card maker. Files of up to 500 MB.
+- **Nuclei detections are candidates**, never findings: each result lands in the triage with the
+  template, the severity Nuclei gave (and the suggested one), where it matched, its references,
+  CVE, CWE and CVSS, what it extracted and the curl command as text to copy (never run).
+  Informative ones are folded. HTTP requests and responses are kept only if you ask for them at
+  import, and become evidence when you document the detection as a finding. Reimporting keeps
+  every decision; results that only name a host are kept on a host by that name.
+- **Burp Suite issues** (Report issues, XML) land in the same triage: the confidence Burp gave
+  (Certain, Firm, Tentative) is shown on each candidate, the HTML of its descriptions becomes plain
+  text, and the base64 requests and responses are decoded only if you ask for them at import. One
+  issue type on two parameters is two candidates; a later export of the same project keeps every
+  decision.
+- **OWASP ZAP alerts** (traditional XML or JSON, "plus" variants included) land in the same
+  triage, one candidate per alert and site with its places listed, or one per place if you choose
+  so in the preview. ZAP writes no IP addresses: a site is a host named by its name, and joins the
+  asset of its address once nmap sees that name.
+- **Nessus results** (`.nessus` v2) land in the same triage, one candidate per plugin, host, port
+  and protocol, with the severity, CVE, CWE, CVSS and plugin output Nessus gave. Informative
+  plugins are kept as data of each asset unless you ask for them as candidates, and the scan
+  policy, which may hold credentials, is never read.
 - **Asset inventory**: every host, domain, URL, application, API or cloud resource once, added by
   hand or by an import, with its scope status, services, pending detections, review and the tools
   that saw it. Merge assets that are the same and separate them again without losing anything.
   Each asset has a card with its services, findings, evidence, candidates and the history of every
   import,
   and every observed value tells which import it comes from.
-- **Explainable risk and priority** per host, coverage, anomalies, correlations and an inventory of
-  products and versions (the Software tab).
+- **Network analysis** under Assets › Network: summary, hosts, ports, map, port matrix, software
+  and scan comparison. Explainable risk and priority per host (an aid to prioritise, not a
+  replacement for the severity of findings), coverage, anomalies, correlations and an inventory of
+  products and versions. A host opens its asset card from any of them.
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
   Nothing is looked up online.
 - **Reports** in HTML (print-ready, with your cover and logo), Markdown, CSV and JSON. The scope
@@ -160,11 +193,10 @@ No backend, no network requests: your data never leaves your browser.
 
 Planned for the next releases, all in the browser and without network:
 
-- Out-of-scope warnings in the import preview.
 - Redaction of screenshots and removal of image metadata.
 - Your own methodologies in the Library, and the coverage of the checklist in the reports.
-- Importers for Nuclei, Burp Suite, OWASP ZAP, Nessus, OpenVAS and generic CSV, with preview and
-  triage of candidates.
+- Importers for Nessus, OpenVAS and generic CSV, with preview and triage of
+  candidates.
 - Executive and technical reports, an automatic lock after inactivity, and engagement packages
   (optionally encrypted) to merge work between auditors.
 
