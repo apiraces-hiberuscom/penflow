@@ -98,18 +98,38 @@ No backend, no network requests: your data never leaves your browser.
 </table>
 
 - **Engagement summary** on Overview: client, status, dates and days to delivery, assets in and out
-  of scope, candidates to triage, a list of what is pending before delivery with a link to each
-  place, and the recent activity.
-- **Organised by engagement.** The sidebar follows the work: Overview, then Execute (Import,
-  Assets, Findings, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
+  of scope, findings and candidates to triage, methodology progress, a list of what is pending
+  before delivery (checklist items still open among them) with a link to each place, and the
+  recent activity.
+- **Findings you document**, apart from what tools detect: a card in sections (affected assets,
+  services and locations, description, impact, reproduction and remediation in safe Markdown),
+  stable references such as `PF-001`, a CVSS 3.1 and 4.0 calculator whose score sets the
+  severity, the CWE catalogue of MITRE bundled for offline search, a library of finding
+  templates (97 built in, in English, plus your own), statuses from draft to confirmed, search, filters and bulk
+  actions, and warnings before delivery (no evidence, no remediation, out of scope, possible
+  duplicate). Document a group of candidates as one draft, and create a retest that carries the
+  confirmed findings to a new engagement.
+- **Evidence** with its SHA-256: drop, choose or paste screenshots, logs, HTTP exchanges and files,
+  link them to findings and assets, mark the relevant lines of a text, and check their integrity.
+  The type is told by the content; only checked images are shown, and SVG, HTML and PDF never
+  render. Files are kept once per content, encrypted with the engagement.
+- **Methodologies and checklists**: six built-in methodologies in English and Spanish (generic
+  phases based on NIST SP 800-115, external network, internal network and Active Directory, web
+  application, API and mobile), with OWASP WSTG, ASVS, API Security Top 10 and MASVS identifiers
+  as references. Follow them as a checklist by phases with its progress, take notes, mark what
+  does not apply, add items of your own, and create findings or add evidence from any item.
+  Updating to a new version of a methodology keeps the work done.
+- **Organised by engagement.** The sidebar follows the work: Overview, then Prepare (Scope,
+  Methodology), Execute (Import, Assets, Findings, Evidence, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
   encryption state are always visible in the header.
 - **Imports** nmap (XML, grepable and normal) and masscan (XML, list and JSON) results, merged by
   IP address.
 - **Asset inventory**: every host, domain, URL, application, API or cloud resource once, added by
   hand or by an import, with its scope status, services, pending detections, review and the tools
   that saw it. Merge assets that are the same and separate them again without losing anything.
-  Each asset has a card with its services, candidates and the history of every import, and every
-  observed value tells which import it comes from.
+  Each asset has a card with its services, findings, evidence, candidates and the history of every
+  import,
+  and every observed value tells which import it comes from.
 - **Explainable risk and priority** per host, coverage, anomalies, correlations and an inventory of
   products and versions (the Software tab).
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
@@ -141,9 +161,8 @@ No backend, no network requests: your data never leaves your browser.
 Planned for the next releases, all in the browser and without network:
 
 - Out-of-scope warnings in the import preview.
-- Findings with CVSS 3.1/4.0, a bundled CWE catalogue and finding templates.
-- Evidence (screenshots and files) with hashes, safe preview and redaction.
-- Methodologies and checklists.
+- Redaction of screenshots and removal of image metadata.
+- Your own methodologies in the Library, and the coverage of the checklist in the reports.
 - Importers for Nuclei, Burp Suite, OWASP ZAP, Nessus, OpenVAS and generic CSV, with preview and
   triage of candidates.
 - Executive and technical reports, an automatic lock after inactivity, and engagement packages
