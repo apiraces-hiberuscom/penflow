@@ -129,8 +129,8 @@ No backend, no network requests: your data never leaves your browser.
   Methodology), Execute (Import, Assets, Findings, Evidence, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
   encryption state are always visible in the header.
 - **Import centre** for nmap (XML, grepable and normal), masscan (XML, list and JSON), Nuclei
-  (JSON lines, `-jsonl`), Burp Suite (issues XML), OWASP ZAP (traditional XML or JSON) and Nessus
-  (`.nessus` v2) results:
+  (JSON lines, `-jsonl`), Burp Suite (issues XML), OWASP ZAP (traditional XML or JSON), Nessus
+  (`.nessus` v2) and OpenVAS / Greenbone (XML report) results, and any other CSV:
   drop the files, choose them or paste the output and see what was understood before anything is
   added. It counts the new and existing assets, services and hosts outside the scope, warns about a
   file already imported, and keeps the history of each import, with its hash and original copy,
@@ -155,6 +155,15 @@ No backend, no network requests: your data never leaves your browser.
   and protocol, with the severity, CVE, CWE, CVSS and plugin output Nessus gave. Informative
   plugins are kept as data of each asset unless you ask for them as candidates, and the scan
   policy, which may hold credentials, is never read.
+- **OpenVAS / Greenbone results** (the XML report of GVM, from OpenVAS 8 on) land in the same
+  triage, one candidate per NVT, host, port and protocol, with the threat, CVE, CVSS and what the
+  NVT saw. The quality of detection (QoD) is shown as confidence, and results under 70 % are
+  hidden until you ask for them, as in Greenbone. Log results are kept as data of each asset.
+- **Any CSV** (a tool without its own importer, or an inventory from the client): map its columns
+  to asset, port, title, severity, CVE, CVSS and more, from suggestions, and choose what each
+  severity value means; nothing ambiguous is guessed. Rows with a title become candidates, the rest
+  assets and services. Save the mapping as a profile and the next file of that tool is mapped for
+  you.
 - **Asset inventory**: every host, domain, URL, application, API or cloud resource once, added by
   hand or by an import, with its scope status, services, pending detections, review and the tools
   that saw it. Merge assets that are the same and separate them again without losing anything.
