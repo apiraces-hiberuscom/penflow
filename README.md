@@ -105,11 +105,21 @@ No backend, no network requests: your data never leaves your browser.
   services and locations, description, impact, reproduction and remediation in safe Markdown),
   stable references such as `PF-001`, a CVSS 3.1 and 4.0 calculator whose score sets the
   severity, the CWE catalogue of MITRE bundled for offline search, a library of finding
-  templates (97 built in, in English, plus your own), statuses from draft to confirmed, search, filters and bulk
+  templates (97 built in, in English, Spanish, German, French and Russian, offered in the
+  language of your reports, plus your own), statuses from draft to confirmed, search, filters and bulk
   actions, and warnings before delivery (no evidence, no remediation, out of scope, possible
-  duplicate). Create a retest that carries the confirmed findings to a new engagement.
-- **Triage of candidates**: what the rules detect waits in Findings › Triage, grouped by rule or by
-  asset. Tick groups or single candidates and, all at once, promote them to one new finding, add
+  duplicate). Create a retest that carries the confirmed findings to a new engagement, then give
+  each one its result (remediated, partially remediated, not remediated, risk accepted) with a
+  date, a note and evidence of the retest, compare it with the original side by side and deliver
+  the retest section of the report. A later scan that still sees a finding marked remediated is
+  pointed out; the status never changes on its own.
+- **Next step, always in sight**: the Overview proposes the one thing to do next (define the scope,
+  import, triage, add evidence, document, deliver) and shows the stage of the engagement. Press
+  `?` for the keyboard shortcuts: `g c` goes to the candidates, `j`/`k`/`x` pick them, `p`
+  promotes and `d` dismisses, `Ctrl+S` saves a finding.
+- **Triage of candidates**: what the rules detect waits in Findings › Candidates, grouped by rule or
+  by asset. Tick groups or single candidates and, all at once, promote them to one new finding
+  (written in a side panel, without leaving the list), add
   them to a finding you already have, dismiss them with a reason (false positive, duplicate, out of
   scope, not relevant) or put them back to new; the last change can be undone. A candidate keeps
   its decision when the scan is loaded again, says when the last scan of that place no longer
@@ -118,15 +128,22 @@ No backend, no network requests: your data never leaves your browser.
 - **Evidence** with its SHA-256: drop, choose or paste screenshots, logs, HTTP exchanges and files,
   link them to findings and assets, mark the relevant lines of a text, and check their integrity.
   The type is told by the content; only checked images are shown, and SVG, HTML and PDF never
-  render. Files are kept once per content, encrypted with the engagement.
+  render. Files are kept once per content, encrypted with the engagement. Image metadata (EXIF,
+  location, device) is removed when an image is added, and a screenshot can be **redacted**:
+  opaque boxes and a crop make a new PNG copy, the original is kept, and the report uses the
+  redacted one.
 - **Methodologies and checklists**: six built-in methodologies in English and Spanish (generic
   phases based on NIST SP 800-115, external network, internal network and Active Directory, web
   application, API and mobile), with OWASP WSTG, ASVS, API Security Top 10 and MASVS identifiers
   as references. Follow them as a checklist by phases with its progress, take notes, mark what
   does not apply, add items of your own, and create findings or add evidence from any item.
   Updating to a new version of a methodology keeps the work done.
+- **Notes** of the engagement: meeting notes, test accounts given by the client and observations
+  that are not findings, in safe Markdown with a title and tags, linked to findings and assets and
+  listed in their cards. A note can be marked as holding credentials only in an encrypted
+  engagement, and such notes stay out of packages without a passphrase. Notes never go to a report.
 - **Organised by engagement.** The sidebar follows the work: Overview, then Prepare (Scope,
-  Methodology), Execute (Import, Assets, Findings, Evidence, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
+  Methodology), Execute (Import, Assets, Findings, Evidence, Notes, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
   encryption state are always visible in the header.
 - **Import centre** for nmap (XML, grepable and normal), masscan (XML, list and JSON), Nuclei
   (JSON lines, `-jsonl`), Burp Suite (issues XML), OWASP ZAP (traditional XML or JSON), Nessus
@@ -145,7 +162,7 @@ No backend, no network requests: your data never leaves your browser.
 - **Burp Suite issues** (Report issues, XML) land in the same triage: the confidence Burp gave
   (Certain, Firm, Tentative) is shown on each candidate, the HTML of its descriptions becomes plain
   text, and the base64 requests and responses are decoded only if you ask for them at import. One
-  issue type on two parameters is two candidates; a later export of the same project keeps every
+  issue type on two parameters is two candidates; a later export of the same engagement keeps every
   decision.
 - **OWASP ZAP alerts** (traditional XML or JSON, "plus" variants included) land in the same
   triage, one candidate per alert and site with its places listed, or one per place if you choose
@@ -176,8 +193,25 @@ No backend, no network requests: your data never leaves your browser.
   products and versions. A host opens its asset card from any of them.
 - **Known vulnerabilities** from the `vulners` script or from a CVE base you import (NVD JSON 2.0).
   Nothing is looked up online.
-- **Reports** in HTML (print-ready, with your cover and logo), Markdown, CSV and JSON. The scope
-  note accepts Markdown, with a preview; whatever you write is always shown as text, never as HTML.
+- **The report of the engagement**, made from what you documented: cover, document control,
+  executive summary, scope, methodology coverage, findings with their evidence, retest and
+  appendices, in the language you choose. One self-contained HTML file (no script, images
+  embedded), a print layout to save it as PDF, and Markdown with its images in a ZIP. Each report
+  is recorded in the activity with its SHA-256.
+- **Engagement packages** (`.penflow`): the whole engagement, its evidence files and its
+  activity in one file, optionally encrypted with its own passphrase and checked hash by hash when
+  imported. To back up, to move work between copies of PenFlow, or to merge the work of several
+  auditors: changes on one side are joined, changes on both sides are asked record by record.
+- **Report templates**: full technical, executive and retest built in, and your own in the Library
+  with your sections and order, logo, accent colour, introduction and notices. Export and import
+  them as JSON.
+- **Network report and data exports** in HTML, Markdown, CSV and JSON, below the report of the
+  engagement. Whatever you write is always shown as text, never as HTML.
+- **Home**, the panel of every engagement: the active ones with their methodology progress and
+  next date, the open critical and high findings of all of them and the recent activity, each
+  leading back to where it lives. A locked encrypted engagement shows only its alias. The first
+  visit opens on a welcome with **Create engagement** and **Try with sample data**, an engagement of
+  synthetic data only.
 - **Engagements with their details**: client, type, status, dates, reference and team. Find them
   by name, reference or client, filter by status, type or client, and sort by activity, name or due
   date. Each new engagement asks you to confirm you are authorised to test it.
@@ -194,7 +228,7 @@ No backend, no network requests: your data never leaves your browser.
   iterations), from its settings or when it is created. Only the alias you choose is shown while
   it is locked, and there is no recovery if the passphrase is forgotten.
 - **Your profile and preferences**, kept in this browser: display name, interface and report
-  language, theme and evidence size limit, in **Settings**.
+  language, theme, evidence size limit and image metadata removal, in **Settings**.
 - **Five languages** (English, Español, Deutsch, Français, Русский), light, dark and high contrast
   themes, and keyboard and screen reader support.
 
@@ -204,10 +238,7 @@ Planned for the next releases, all in the browser and without network:
 
 - Redaction of screenshots and removal of image metadata.
 - Your own methodologies in the Library, and the coverage of the checklist in the reports.
-- Importers for Nessus, OpenVAS and generic CSV, with preview and triage of
-  candidates.
-- Executive and technical reports, an automatic lock after inactivity, and engagement packages
-  (optionally encrypted) to merge work between auditors.
+- An automatic lock after inactivity.
 
 ## Three ways to use it
 
@@ -309,9 +340,10 @@ shasum -a 256 -c SHA256SUMS     # macOS
 ### Moving work between copies
 
 Data is saved in the browser, and browsers keep it separately for each address. The demo and the
-portable copy (and the portable copy on another port) do not see each other's data. To move a
-project, open **Engagement settings › Portability** and use **Export project** in one copy and
-**Import project** in the other. Project files exported from vnmap can be imported too.
+portable copy (and the portable copy on another port) do not see each other's data. To move an
+engagement, open **Engagement settings › Package and archive** and use **Export package** in one
+copy and **Import a package** in the other (a package dropped in Import is recognised too). JSON
+files of earlier versions, and those exported from vnmap, can be imported too.
 
 ## Privacy
 
