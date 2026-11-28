@@ -116,7 +116,7 @@ No backend, no network requests: your data never leaves your browser.
 - **Next step, always in sight**: the Overview proposes the one thing to do next (define the scope,
   import, triage, add evidence, document, deliver) and shows the stage of the engagement. Press
   `?` for the keyboard shortcuts: `g c` goes to the candidates, `j`/`k`/`x` pick them, `p`
-  promotes and `d` dismisses, `Ctrl+S` saves a finding.
+  promotes and `d` dismisses, `Ctrl+S` saves a finding, `Shift+N` starts a note.
 - **Search the whole engagement** from the top bar (`/`): assets, findings, evidence, notes and
   checklist items next to hosts, ports, candidates and script output, each with the terms of its
   own list (`severity:high`, `kind:url`, `port:445`…), and open any result where it lives.
@@ -147,7 +147,8 @@ No backend, no network requests: your data never leaves your browser.
   from scratch or from a copy of a built-in one, and move them between browsers in a file.
 - **Notes** of the engagement: meeting notes, test accounts given by the client and observations
   that are not findings, in safe Markdown with a title and tags, linked to findings and assets and
-  listed in their cards. A note can be marked as holding credentials only in an encrypted
+  listed in their cards. They save themselves, start from a template, and link a finding with `#`
+  or an asset with `@` as you type. A note can be marked as holding credentials only in an encrypted
   engagement, and such notes stay out of packages without a passphrase. Notes never go to a report.
 - **Organised by engagement.** The sidebar follows the work: Overview, then Prepare (Scope,
   Methodology), Execute (Import, Assets, Findings, Evidence, Notes, Commands), Deliver (Reports) and Manage (Engagement settings). Save and
