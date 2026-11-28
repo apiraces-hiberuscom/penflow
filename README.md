@@ -157,7 +157,7 @@ No backend, no network requests: your data never leaves your browser.
   (JSON lines, `-jsonl`), Burp Suite (issues XML), OWASP ZAP (traditional XML or JSON), Nessus
   (`.nessus` v2) and OpenVAS / Greenbone (XML report) results, and any other CSV:
   drop the files, choose them or paste the output and see what was understood before anything is
-  added. It counts the new and existing assets, services and hosts outside the scope, warns about a
+  added. Each tool has its card, with what it brings and how to get its file. It counts the new and existing assets, services and hosts outside the scope, warns about a
   file already imported, and keeps the history of each import, with its hash and original copy,
   which you can undo. Results are merged by IP address; each host keeps its names, operating
   system, MAC address and network card maker. Files of up to 500 MB.
