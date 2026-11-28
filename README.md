@@ -13,7 +13,7 @@ No backend, no network requests: your data never leaves your browser.
 [![Release](https://img.shields.io/github/v/release/apiraces-hiberuscom/penflow?style=flat-square&color=2672cc&label=release)](https://github.com/apiraces-hiberuscom/penflow/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2672cc?style=flat-square)](LICENSE)
 [![Network requests: none](https://img.shields.io/badge/network_requests-none-2e7d32?style=flat-square)](#privacy)
-[![Works offline](https://img.shields.io/badge/works-offline-2e7d32?style=flat-square)](#three-ways-to-use-it)
+[![Works offline](https://img.shields.io/badge/works-offline-2e7d32?style=flat-square)](#four-ways-to-use-it)
 [![Languages](https://img.shields.io/badge/languages-EN_%C2%B7_ES_%C2%B7_DE_%C2%B7_FR_%C2%B7_RU-6b6b6b?style=flat-square)](#what-it-does-today)
 
 ### [Open the live demo »](https://apiraces-hiberuscom.github.io/penflow/)
@@ -117,6 +117,12 @@ No backend, no network requests: your data never leaves your browser.
   import, triage, add evidence, document, deliver) and shows the stage of the engagement. Press
   `?` for the keyboard shortcuts: `g c` goes to the candidates, `j`/`k`/`x` pick them, `p`
   promotes and `d` dismisses, `Ctrl+S` saves a finding.
+- **Search the whole engagement** from the top bar (`/`): assets, findings, evidence, notes and
+  checklist items next to hosts, ports, candidates and script output, each with the terms of its
+  own list (`severity:high`, `kind:url`, `port:445`…), and open any result where it lives.
+- **One filter bar in every list**, right under its heading: search, the filters in use as chips
+  that come off with ×, «+ Filter» for the rest, and the view and the count on the right. Each row
+  shows one action; the others wait under «⋯».
 - **Triage of candidates**: what the rules detect waits in Findings › Candidates, grouped by rule or
   by asset. Tick groups or single candidates and, all at once, promote them to one new finding
   (written in a side panel, without leaving the list), add
@@ -137,7 +143,8 @@ No backend, no network requests: your data never leaves your browser.
   application, API and mobile), with OWASP WSTG, ASVS, API Security Top 10 and MASVS identifiers
   as references. Follow them as a checklist by phases with its progress, take notes, mark what
   does not apply, add items of your own, and create findings or add evidence from any item.
-  Updating to a new version of a methodology keeps the work done.
+  Updating to a new version of a methodology keeps the work done. Write your own in the Library,
+  from scratch or from a copy of a built-in one, and move them between browsers in a file.
 - **Notes** of the engagement: meeting notes, test accounts given by the client and observations
   that are not findings, in safe Markdown with a title and tags, linked to findings and assets and
   listed in their cards. A note can be marked as holding credentials only in an encrypted
@@ -217,8 +224,15 @@ No backend, no network requests: your data never leaves your browser.
   date. Each new engagement asks you to confirm you are authorised to test it.
 - **Structured scope** with inclusions and exclusions (an exclusion always wins), revisions you can
   compare, restrictions and time windows, and target lists for nmap `-iL` and `--excludefile`.
+  Paste several lines into the value field to add them all at once.
   Scope checks never resolve names. Hosts and services outside it are marked in every view and in
   reports, and the command builder always leaves the exclusions out.
+- **Engagement data for other tools**, in Reports: the findings you documented as CSV or a
+  documented JSON, the assets and their services as CSV or JSON, and target lists for `nmap -iL`
+  that keep to the scope. CSV cells never run as spreadsheet formulas.
+- **Prepare a command** from an asset or a finding: the command builder opens with their hosts as
+  targets, leaves out whatever is outside the scope and shows the restrictions of the scope as a
+  warning, there and in the queue. PenFlow never runs it.
 - **Activity** of each engagement: what changed, who and when, filterable and linked to where it
   happened. It never keeps the scope, notes or imported content.
 - **Clients**, with sector, notes and contacts: search them, archive them and see each client's
@@ -226,7 +240,10 @@ No backend, no network requests: your data never leaves your browser.
   client of an encrypted engagement is kept inside it.
 - **Encryption per engagement** with a passphrase (AES-256-GCM, PBKDF2-SHA-256 with 600 000
   iterations), from its settings or when it is created. Only the alias you choose is shown while
-  it is locked, and there is no recovery if the passphrase is forgotten.
+  it is locked, and there is no recovery if the passphrase is forgotten. **Lock** it from the
+  header at any time; it locks by itself after 15 minutes without activity (5 to 120 in Settings).
+- **Storage** in Settings: how much this browser keeps, persistent storage, the files of each
+  engagement, and emptying the trash or the original copies of imports of the open one.
 - **Your profile and preferences**, kept in this browser: display name, interface and report
   language, theme, evidence size limit and image metadata removal, in **Settings**.
 - **Five languages** (English, Español, Deutsch, Français, Русский), light, dark and high contrast
@@ -236,17 +253,14 @@ No backend, no network requests: your data never leaves your browser.
 
 Planned for the next releases, all in the browser and without network:
 
-- Redaction of screenshots and removal of image metadata.
-- Your own methodologies in the Library, and the coverage of the checklist in the reports.
-- An automatic lock after inactivity.
-
-## Three ways to use it
+## Four ways to use it
 
 | Way                                                                  | Best for                                                    | Needs                                    |
 | -------------------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------- |
 | 🌐 **[Online demo](https://apiraces-hiberuscom.github.io/penflow/)** | Trying it, with test data only                              | A browser                                |
 | 💻 **[Installed app](#install-it-as-an-app)**                        | Opening it like any other app, also offline                 | Chrome or Edge                           |
 | 📦 **[Portable copy](#portable-copy)**                               | A computer with no internet, such as a test machine on site | A browser (and `python3` on Linux/macOS) |
+| 🐳 **[Container](#run-it-in-a-container)**                           | Serving it from your own machine or network                 | Docker, and HTTPS outside `localhost`    |
 
 > [!WARNING]
 > The online demo shares its web address with other demos of the same GitHub account. Use it with
@@ -336,6 +350,23 @@ Get-FileHash .\penflow-*-portable.zip -Algorithm SHA256
 sha256sum -c SHA256SUMS         # Linux
 shasum -a 256 -c SHA256SUMS     # macOS
 ```
+
+### Run it in a container
+
+Each release carries `penflow-<version>-docker.zip` (listed in `SHA256SUMS` too): the build made
+for a container, with a Dockerfile that serves it through an unprivileged nginx, read only, on port
+8080 and with the security headers of the application. The image keeps no engagement data:
+everything stays in each browser, as in any copy.
+
+```bash
+unzip penflow-<version>-docker.zip && cd penflow-<version>-docker
+docker build -t penflow .
+docker compose up -d            # http://127.0.0.1:8080
+```
+
+To reach it from other machines, publish it through an HTTPS reverse proxy you already run: on
+plain HTTP outside `localhost` the browser turns off the installation as an app and the
+encryption of engagements.
 
 ### Moving work between copies
 
